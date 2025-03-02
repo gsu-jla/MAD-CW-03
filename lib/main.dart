@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter List App',
+      title: 'Task Manager App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -28,15 +28,27 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<String> _items = [];
+  final List<Map<String, dynamic>> _items = [];
 
   void _addItem() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        _items.add(_controller.text);
+        _items.add({'task': _controller.text, 'completed': false});
         _controller.clear();
       });
     }
+  }
+
+  void _toggleCompletion(int index) {
+    setState(() {
+      _items[index]['completed'] = !_items[index]['completed'];
+    });
+  }
+
+  void _deleteItem(int index) {
+    setState(() {
+      _items.removeAt(index);
+    });
   }
 
   @override
@@ -75,7 +87,32 @@ class _ListScreenState extends State<ListScreen> {
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(_items[index]),
+                    title: Text(
+                      _items[index]['task'],
+                      style: TextStyle(
+                        color: _items[index]['completed']
+                            ? const Color(0xFF14C704)
+                            : Colors.black,
+                        decoration: _items[index]['completed']
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Checkbox(
+                          value: _items[index]['completed'],
+                          onChanged: (bool? value) {
+                            _toggleCompletion(index);
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _deleteItem(index),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
