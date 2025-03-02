@@ -43,7 +43,11 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Manager'),
+        title: const Text(
+          'Task Manager',
+          style: TextStyle(color: Color(0xFFA6A6A6)),
+        ),
+        backgroundColor: const Color(0xFF4503FC),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,7 +59,7 @@ class _ListScreenState extends State<ListScreen> {
                   child: TextField(
                     controller: _controller,
                     decoration: const InputDecoration(
-                      labelText: 'Enter item',
+                      labelText: 'Enter task',
                     ),
                   ),
                 ),
