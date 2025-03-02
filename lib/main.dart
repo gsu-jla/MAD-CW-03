@@ -43,7 +43,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter List View'),
+        title: const Text('Task Manager'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
